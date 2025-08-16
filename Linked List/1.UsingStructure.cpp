@@ -118,11 +118,16 @@ Node* insertBeforePos(Node* &head, int value, int position){
     Node* new_node = new Node(value);
     Node* tmp = head;
 
+    if(position == 0){
+        new_node -> next = head;
+        head = new_node;
+        return head;
+    }
 
     for(int i = 0 ; tmp != NULL &&  i < position - 1 ; i++){
         tmp = tmp -> next;
     }
-
+    
     if(tmp == NULL){
             // position - 1 is out of bound.
             return head;
@@ -138,6 +143,8 @@ Node* DeleteNode(Node* &head, int position){
     // deleting a node creates a vacancy, that vacancy must be eraditcated.
 
     Node* tmp = head;
+    Node* tobedeleted;
+
     for(int i = 0 ; tmp != NULL && i < position - 1 ; i++){
         tmp = tmp -> next;
     }
@@ -150,12 +157,13 @@ Node* DeleteNode(Node* &head, int position){
 
     if(position == 0){
         // Case 1 : delete head
-        head = tmp -> next;
-        delete tmp;
-        tmp = NULL;
+        tobedeleted = head;
+        head = head->next;
+        delete tobedeleted;
+        tobedeleted = NULL;
     }else{
         // Case 2
-        Node* tobedeleted = tmp -> next;
+        tobedeleted = tmp -> next;
         tmp -> next = tmp -> next -> next;
         delete tobedeleted;
         tobedeleted = NULL;
@@ -164,9 +172,58 @@ Node* DeleteNode(Node* &head, int position){
     return head;
 }
 
-
+void print(Node* &head){
+    Node* tmp  = head;
+    cout << "Head|> ";
+    while(tmp){
+        cout << tmp -> data << " ";
+        tmp = tmp -> next;
+    }
+    cout << "<|Tail" << endl;
+}
 
 int main(){
+    Node* head = NULL;
+    insertAtHead(head, 1);
+    insertAtHead(head, 2);
+    insertAtHead(head, 3);
+    
+    print(head);
 
+    insertAtTail(head, 4);
+    insertAtTail(head, 5);
+    insertAtTail(head, 6);
+
+    print(head);
+
+
+    insertAtPos(head, 7, 0);
+    insertAtPos(head, 7, 2);
+    insertAtPos(head, 7, 5);
+    insertAtPos(head, 7, 7);
+    insertAtPos(head, 7, 9);
+    insertAtPos(head, 7, 11);
+    
+    print(head);
+
+    insertAfterPos(head, 8, -1);
+    insertAfterPos(head, 8, 12);
+
+    print(head);
+
+    insertBeforePos(head, 9, 14);
+    
+    print(head);
+
+
+    DeleteNode(head, 0);
+
+    print(head);
+
+    DeleteNode(head, 12);
+
+    print(head);
+
+    
     return 0;
 }
