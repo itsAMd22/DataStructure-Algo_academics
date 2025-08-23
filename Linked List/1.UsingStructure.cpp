@@ -1,229 +1,239 @@
 #include<iostream>
 using namespace std;
 
-
-//Definition of node
 struct Node{
     int data;
     Node* next;
     Node(int value){
+        //default constructor
         data = value;
         next = NULL;
     }
 };
 
+void print(Node* &head){
+    Node* tmp = head;
+    cout << "HEAD |>>> ";
+    while(tmp){
+        cout << tmp->data << " ";
+        tmp = tmp->next;
+    }
+    cout << " <<<| TAIL\n";
+}
+
 Node* insertAtHead(Node* &head, int value){
-    // 1. create a node
     Node* new_node = new Node(value);
-
-    // // 2. connect it to the list
-    // if(head == NULL){
-    //     // Case 1 : list is empty, new_node will be the head.
-    //     head = new_node;
-    //     return head;
-    // }else{
-    //     // Case 2 : list is not empty, so head will be updated apon insertion.
-    //     new_node -> next = head;
-    //     head = new_node;
-    // }
-
-    // // both case can be handled at once, using the code below.
-    new_node -> next = head;
+    new_node->next = head;
     head = new_node;
-
     return head;
 }
 
 Node* insertAtTail(Node* &head, int value){
-    // 1. create a node
     Node* new_node = new Node(value);
-
-    // 2. connect it to the list
     if(head == NULL){
-        // Case 1 : list is empty, new_node will be both - the head and tail
         head = new_node;
-        return head;
     }else{
-        // Case 2 : list is not empty, so traverse until the tail before insertion.
         Node* tmp = head;
-        while(tmp -> next != NULL){
-            tmp = tmp -> next;
-        }
-        tmp -> next = new_node;
+        while(tmp->next)    tmp = tmp->next;
+        tmp->next = new_node;
     }
-
     return head;
 }
 
-Node* insertAtPos(Node* &head, int value, int position){
-    // 1. create a node
+Node* insertAtPos(Node* &head, int value, int pos){
     Node* new_node = new Node(value);
-
-    // 2. connect it to the list
-    if(position == 0){
-        // Case 1 : insert at head.
-        new_node -> next = head;
+    if(pos == 0){
+        //insert at head
+        new_node->next = head;
         head = new_node;
+        //automatically handles the case where the list is emtpy
     }else{
-        // Case 2 : insert at any position except head, this case covers insert at tail too.
         Node* tmp = head;
-        for(int i = 0 ; tmp != NULL && i < position - 1 ; i++){
-            tmp = tmp -> next;
+        for(int i = 0; i <= pos - 2 && tmp ; i++){
+            tmp = tmp->next;
         }
-
         if(tmp == NULL){
-            // position is out of bound.
+            //pos > maximum index + 1
+            cout << "insertion not possible, overflow!\n";
             return head;
+        }else if(!tmp->next){
+            //insert at tail
+            tmp->next = new_node;
+        }else{
+            //insert in-between
+            new_node->next = tmp->next;
+            tmp->next = new_node;
         }
-        new_node -> next = tmp -> next;
-        tmp -> next = new_node;
     }
-
     return head;
 }
 
+Node* insertAfterPos(Node* &head, int value, int pos){
+    //inserting after pos = inserting at position + 1
+    pos++;
 
-Node* insertAfterPos(Node* &head, int value, int position){
-    // 1. create a node
     Node* new_node = new Node(value);
-
-    // 2. connect it to the list
-    if(position == -1){
-        // Case 1 : insert at head.
-        new_node -> next = head;
+    if(pos == 0){
+        //insert at head
+        new_node->next = head;
         head = new_node;
+        //automatically handles the case where the list is emtpy
     }else{
-        // Case 2 : insert after any position except head, this case covers insert after tail too.
         Node* tmp = head;
-        for(int i = 0 ; tmp != NULL && i < position ; i++){
-            tmp = tmp -> next;
+        for(int i = 0; i <= pos - 2 && tmp ; i++){
+            tmp = tmp->next;
         }
-
-        if(tmp == NULL){
-            // position + 1 is out of bound.
+        if(pos < 0){
+            cout << "insertion not possible, underflow!\n";
             return head;
+        }else if(tmp == NULL){
+            //pos > maximum index + 1
+            cout << "insertion not possible, overflow!\n";
+            return head;
+        }else if(!tmp->next){
+            //insert at tail
+            tmp->next = new_node;
+        }else{
+            //insert in-between
+            new_node->next = tmp->next;
+            tmp->next = new_node;
         }
-
-        new_node -> next = tmp -> next;
-        tmp -> next = new_node;
     }
-
     return head;
 }
 
-Node* insertBeforePos(Node* &head, int value, int position){
-    // inserting before position n is basically inserting afer position (n - 1).
-
-    // 1. create a node
+Node* insertBeforePos(Node* &head, int value, int pos){
     Node* new_node = new Node(value);
-    Node* tmp = head;
 
-    if(position == 0){
-        new_node -> next = head;
+
+    if(pos == 0){
+        //insert at head
+        new_node->next = head;
         head = new_node;
+        //automatically handles the case where the list is emtpy
+    }else{
+        
+        Node* tmp = head;
+        for(int i = 0; i <= pos - 2 && tmp ; i++){
+            tmp = tmp->next;
+        }
+        if(pos < 0){
+            cout << "insertion not possible, underflow!\n";
+            return head;
+        }else if(tmp == NULL){
+            //pos > maximum index + 1
+            cout << "insertion not possible, overflow!\n";
+            return head;
+        }else if(!tmp->next){
+            //insert at tail
+            tmp->next = new_node;
+        }else{
+            //insert in-between
+            new_node->next = tmp->next;
+            tmp->next = new_node;
+        }
+    }
+    return head;
+}
+
+Node* deleteHead(Node* &head){
+    if(!head){
+        cout << "underflow!\n";
+        return head;
+    }
+    Node* tmp = head;
+    head = head->next;
+    delete tmp;
+    tmp = NULL;
+    return head;
+}
+
+Node* deleteTail(Node* &head){
+    if(!head){
+        cout << "underflow!\n";
+        return head;
+    }else if(!head->next){
+        delete head;
+        head = NULL;
         return head;
     }
 
-    for(int i = 0 ; tmp != NULL &&  i < position - 1 ; i++){
-        tmp = tmp -> next;
-    }
-    
-    if(tmp == NULL){
-            // position - 1 is out of bound.
-            return head;
-    }
-
-    new_node -> next = tmp -> next;
-    tmp -> next = new_node;
-
+    Node* tmp = head;
+    while(tmp->next->next)    tmp = tmp->next;
+    Node* tobedel = tmp->next;
+    delete tobedel;
+    tobedel = NULL;
+    tmp->next = NULL;
     return head;
 }
 
-Node* DeleteNode(Node* &head, int position){
-    // deleting a node creates a vacancy, that vacancy must be eraditcated.
 
-    Node* tmp = head;
-    Node* tobedeleted;
-
-    for(int i = 0 ; tmp != NULL && i < position - 1 ; i++){
-        tmp = tmp -> next;
-    }
-
-
-    if(tmp == NULL){
-            // position - 1 is out of bound.
-            return head;
-    }
-
-    if(position == 0){
-        // Case 1 : delete head
-        tobedeleted = head;
+Node* deleteAtPos(Node* &head, int pos){
+    if(pos < 0 || !head){
+        cout << "Deletion not possible, underflow!\n";
+    }else if(pos == 0){
+        Node* tmp = head;
         head = head->next;
-        delete tobedeleted;
-        tobedeleted = NULL;
+        delete tmp;
+        tmp = NULL;
     }else{
-        // Case 2
-        tobedeleted = tmp -> next;
-        tmp -> next = tmp -> next -> next;
-        delete tobedeleted;
-        tobedeleted = NULL;
+        Node* tmp = head;
+        for(int i = 0 ; tmp && i <= pos - 2 ; i++){
+            tmp = tmp->next;
+        }
+        if(!tmp || !tmp->next){
+            cout << "Deletion not possible, overflow!\n";
+        }else{
+            Node* tobedel = tmp->next;
+            tmp->next = tmp->next->next;
+            delete tobedel;
+            tobedel = NULL;
+        }
     }
-    
     return head;
-}
-
-void print(Node* &head){
-    Node* tmp  = head;
-    cout << "Head|> ";
-    while(tmp){
-        cout << tmp -> data << " ";
-        tmp = tmp -> next;
-    }
-    cout << "<|Tail" << endl;
 }
 
 int main(){
     Node* head = NULL;
-    insertAtHead(head, 1);
-    insertAtHead(head, 2);
-    insertAtHead(head, 3);
-    
-    print(head);
-
-    insertAtTail(head, 4);
-    insertAtTail(head, 5);
-    insertAtTail(head, 6);
-
-    print(head);
-
-
-    insertAtPos(head, 7, 0);
-    insertAtPos(head, 7, 2);
-    insertAtPos(head, 7, 5);
-    insertAtPos(head, 7, 7);
-    insertAtPos(head, 7, 9);
-    insertAtPos(head, 7, 11);
-    
-    print(head);
-
-    insertAfterPos(head, 8, -1);
-    insertAfterPos(head, 8, 12);
-
-    print(head);
-
-    insertBeforePos(head, 9, 14);
-    
-    print(head);
-
-
-    DeleteNode(head, 0);
-
-    print(head);
-
-    DeleteNode(head, 12);
-
-    print(head);
+    // / Insertion tests
+    // cout << "Inserting at head: ";
+    insertAtHead(head, 30);
+    insertAtHead(head, 20);
+    insertAtHead(head, 10);
+    print(head); 
+     // 10 -> 20 -> 30 -> NULL
 
     
+    insertAtTail(head, 40);
+    insertAtTail(head, 50);
+    print(head);  // 10 -> 20 -> 30 -> 40 -> 50 -> NULL
+
+    
+    insertAfterPos(head, 35, 2);
+    print(head);  // 10 -> 20 -> 30 -> 35 -> 40 -> 50 -> NULL
+
+    insertBeforePos(head, 38, 4);
+    print(head);  // 10 -> 20 -> 30 -> 35 -> 38 -> 40 -> 50 -> NULL
+
+    // cout << "Insert at position 3: ";
+    insertAtPos(head, 25, 2);
+    print(head);  // 10 -> 20 -> 25 -> 30 -> 35 -> 38 -> 40 -> 50 -> NULL
+
+
+    cout << endl << endl;
+    insertBeforePos(head, 99, -1);
+    print(head);
+    // // // Deletion tests
+    // // cout << "Delete head: ";
+    // deleteHead(head);
+    // // printList(head);  // 20 -> 25 -> 30 -> 35 -> 38 -> 40 -> 50 -> NULL
+
+    // // cout << "Delete tail: ";
+    // deleteTail(head);
+    // printList(head);  // 20 -> 25 -> 30 -> 35 -> 38 -> 40 -> NULL
+
+    // cout << "Delete at position 4: ";
+    // deleteAtPosition(head, 10);
+    // printList(head);  // 20 -> 25 -> 30 -> 38 -> 40 -> NULL
     return 0;
 }
