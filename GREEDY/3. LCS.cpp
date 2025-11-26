@@ -33,9 +33,6 @@ void solve(){
         cout << '\n';
     }
 
-    // abcdefghi
-    // ecdgi
-
     // result
     cout << "\nmaximum similarity = " << dp[n][m] << endl;
 
@@ -63,4 +60,5 @@ int main(){
         solve();
     }
     return 0;
+
 }
