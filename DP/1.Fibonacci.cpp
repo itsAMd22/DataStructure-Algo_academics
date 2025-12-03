@@ -13,6 +13,7 @@ int fib(int n){
 }
 
 int fib_memo(int n){
+    if(n <= 1)  return n;
     if(memo[n] >= 0){
         return memo[n];
     }
