@@ -39,7 +39,7 @@ int main(){
     }
     int i = n, j = m;
     
-    while(i >= 0 || j >= 0){
+    while(i > 0 || j > 0){
         if(fin[i] == in[j]){
             res = fin[i] + res;
             i--, j--;
@@ -63,3 +63,4 @@ int main(){
     return 0;
 
 }
+
