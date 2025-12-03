@@ -34,7 +34,7 @@ int main(){
 
     cout << "\nmaximum similarity = " << dp[n][m] << endl;
 
-    // using bottom-up approach
+
     int i = n, j = m;
     while(i > 0 && j > 0){
         if(s1[i] == s2[j]){
@@ -49,3 +49,4 @@ int main(){
     cout << "LCS = " << res << '\n';
     return 0;
 }
+
