@@ -24,7 +24,6 @@ int main(){
         }
     }
     
-    // printing dp table
     cout << "DP Table:\n";
     for(int i = 0 ; i <= n ; i++){
         for(int j = 0 ; j <= m ; j++){
@@ -34,8 +33,6 @@ int main(){
     }
 
     cout << "\nMinimum operations = " << dp[n][m] << "\n\n";
-
-    // using bottom-up approach
 
     if(dp[n][m] > 0){
         cout << "Operations: \n";
@@ -67,4 +64,5 @@ int main(){
 
     cout << "\nResult = " << res << '\n';
     return 0;
+
 }
