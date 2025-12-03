@@ -8,13 +8,13 @@ int knap(int i, int available_W, int profit[], int weight[]){
     int j = available_W;
     
     if(i < 1 || available_W <= 0)   return 0;   // not valid or not enough space in the sack.
-    if(dp[i][j] != -1)         return dp[i][j];    // already calculated
-    if(weight[i] > j)          return dp[i][j] = knap(i - 1, available_W, profit, weight);     // this weight cannot be taken
+    if(dp[i][j] != -1)              return dp[i][j];    // already calculated
+    if(weight[i] > j)               return dp[i][j] = knap(i - 1, available_W, profit, weight);     // this weight cannot be taken
     
-    // include weight[i]
+    // include
     int inc = profit[i] + knap(i - 1, available_W - weight[i], profit, weight);
 
-    // exclude weight[i]
+    // exclude
     int exc = knap(i - 1, available_W, profit, weight);
     
     return dp[i][j] = max(inc, exc);
@@ -40,7 +40,6 @@ int main(){
     
     cout << "\nMaximum profit = " << knap(n , m, profit, weight) << '\n';
     
-    //print dp table
     cout << "\nMemorisation table :\n";
     for(int i = 0 ; i <= n ; i++){
         for(int j = 0 ; j <= m ; j++){
@@ -64,4 +63,5 @@ int main(){
     cout << '\n';
 
     return 0;
+
 }
