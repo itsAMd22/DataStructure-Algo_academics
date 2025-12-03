@@ -19,8 +19,7 @@ int main(){
             else    dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + profit[i]);
         }
     }
-
-    //print dp table
+    
     cout << "DP table :\n";
     for(int i = 0 ; i <= n ; i++){
         for(int j = 0 ; j <= m ; j++){
@@ -46,4 +45,5 @@ int main(){
     cout << '\n';
 
     return 0;
+
 }
