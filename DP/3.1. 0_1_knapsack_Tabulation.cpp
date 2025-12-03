@@ -33,7 +33,9 @@ int main(){
     
     int i = n, j = m, X[n + 1] = {0};
     while(i > 0 && j > 0){
-        if(dp[i][j] != dp[i - 1][j])    X[i] = 1, j -= weight[i];
+        if(j >= weight[i] && dp[i][j] == dp[i - 1][j - weight[i]] + profit[i]){
+            X[i] = 1, j -= weight[i];
+        }    
         i--;
     }
 
