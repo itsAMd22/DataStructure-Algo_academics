@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void solve(){
+int main(){
     int n, m;
     
     string s1, s2, res = "";
@@ -24,7 +24,6 @@ void solve(){
         }
     }
 
-    // printing dp table
     cout << "DP Table:\n";
     for(int i = 0 ; i <= n ; i++){
         for(int j = 0 ; j <= m ; j++){
@@ -33,7 +32,6 @@ void solve(){
         cout << '\n';
     }
 
-    // result
     cout << "\nmaximum similarity = " << dp[n][m] << endl;
 
     // using bottom-up approach
@@ -49,15 +47,5 @@ void solve(){
         }
     }
     cout << "LCS = " << res << '\n';
-}
-
-int main(){
-    ios_base::sync_with_stdio(0), cin.tie(0);
-    int t = 1;
-    cin >> t;
-    cin.ignore();
-    while(t--){
-        solve();
-    }
     return 0;
 }
