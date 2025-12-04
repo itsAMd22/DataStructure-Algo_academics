@@ -8,7 +8,7 @@ int main(){
     for(int i = 0 ; i < n ; i++){
         cin >> arr[i];
     }
-    int LIS[n], len = -1, prev[n], ind = n + 1;
+    int LIS[n], len = 1, prev[n], ind = 0;
     for(int i = 0 ; i < n ; i++){
     
         LIS[i] = 1, prev[i] = -1;
