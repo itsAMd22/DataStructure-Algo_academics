@@ -2,13 +2,13 @@
 using namespace std;
 
 const int mx = 1e3;
-int dp[mx][mx];
+int memo[mx][mx];
 
 int LCS(int i, int j, string s1, string s2){
     if(i == s1.size() || j == s2.size())    return 0;
-    else if(dp[i][j] != -1) return dp[i][j];
-    else if(s1[i] == s2[j]) return dp[i][j] = 1 + LCS(i + 1, j + 1, s1, s2);
-    else    return dp[i][j] = max(LCS(i + 1, j, s1, s2), LCS(i, j + 1, s1, s2));
+    else if(memo[i][j] != -1) return memo[i][j];
+    else if(s1[i] == s2[j]) return memo[i][j] = 1 + LCS(i + 1, j + 1, s1, s2);
+    else    return memo[i][j] = max(LCS(i + 1, j, s1, s2), LCS(i, j + 1, s1, s2));
 }
 
 int main(){
@@ -19,7 +19,7 @@ int main(){
 
     for(int i = 0 ; i <= n ; i++){
         for(int j = 0 ; j <= m ; j++){
-            dp[i][j] = -1;
+            memo[i][j] = -1;
         }
     }
 
@@ -29,14 +29,14 @@ int main(){
     cout << "Memorisation table\n";
     for(int i = 0 ; i <= n ; i++){ 
         for(int j = 0 ; j <= m ; j++){
-            cout << dp[i][j] << " ";
+            cout << memo[i][j] << " ";
         }
         cout << '\n';
     }
 
     while(ct > 0){
         if(s1[i] == s2[j])  res += s1[i], i++, j++, ct--;
-        else if(dp[i + 1][j] > dp[i][j + 1])    i++;
+        else if(memo[i + 1][j] > memo[i][j + 1])    i++;
         else    j++;
     }
 
